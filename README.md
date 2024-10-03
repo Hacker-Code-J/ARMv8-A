@@ -3,6 +3,8 @@ ARM64 Architecture and Programming for Raspberry Pi 4B
 
 ## File Structure
 
+
+```shell
 project/
 │
 ├── bin/                 # The final binary (executable) will be placed here
@@ -15,3 +17,4 @@ project/
 │
 ├── Makefile             # Makefile to automate build process
 └── README.md            # Optional: Project documentation
+```
