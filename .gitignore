@@ -1,3 +1,10 @@
+##############
+HelloWorld
+add_fn
+add_fn2
+.gdb_history
+##############
+
 # Prerequisites
 *.d
 
