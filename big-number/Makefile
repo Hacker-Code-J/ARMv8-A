@@ -34,7 +34,8 @@ run: $(TARGET)
 
 # Clean up
 clean:
-	rm -f *.o $(TARGET)
+	rm -f *.o
+	find . -type f -executable -delete
 
 # Phony targets
 .PHONY: all clean rebuild run
