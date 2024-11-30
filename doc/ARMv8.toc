@@ -1,0 +1,61 @@
+\contentsline {section}{\numberline {1}ARM64 Architecture}{5}{section.1}%
+\contentsline {paragraph}{Key Features}{5}{paragraph*.1}%
+\contentsline {subsection}{\numberline {1.1}Memory Layout in Computer Systems}{5}{subsection.1.1}%
+\contentsline {subsubsection}{\numberline {1.1.1}Memory Segments}{5}{subsubsection.1.1.1}%
+\contentsline {subsection}{\numberline {1.2}Performance Metrics and Benchmarks}{7}{subsection.1.2}%
+\contentsline {subsubsection}{\numberline {1.2.1}Quantifying Performance}{8}{subsubsection.1.2.1}%
+\contentsline {subsubsection}{\numberline {1.2.2}Illustrating Performance Comparison}{8}{subsubsection.1.2.2}%
+\contentsline {section}{\numberline {2}GNU Assembly Syntax (GAS)}{9}{section.2}%
+\contentsline {section}{\numberline {3}Load, Store and Branch Instructions}{10}{section.3}%
+\contentsline {subsection}{\numberline {3.1}CPU components and Data paths}{10}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}AArch64 User Registers}{10}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Instruction Components}{11}{subsection.3.3}%
+\contentsline {subsubsection}{\numberline {3.3.1}Setting and using condition flags}{12}{subsubsection.3.3.1}%
+\contentsline {subsubsection}{\numberline {3.3.2}Immediate Values}{12}{subsubsection.3.3.2}%
+\contentsline {subsubsection}{\numberline {3.3.3}Addressing Modes}{14}{subsubsection.3.3.3}%
+\contentsline {subsection}{\numberline {3.4}Load and Store Instructions}{16}{subsection.3.4}%
+\contentsline {subsubsection}{\numberline {3.4.1}Load/store single register}{16}{subsubsection.3.4.1}%
+\contentsline {subsubsection}{\numberline {3.4.2}Load/store single register (unscaled)}{18}{subsubsection.3.4.2}%
+\contentsline {subsubsection}{\numberline {3.4.3}Load/store pair}{19}{subsubsection.3.4.3}%
+\contentsline {subsubsection}{\numberline {3.4.4}Summary}{19}{subsubsection.3.4.4}%
+\contentsline {subsection}{\numberline {3.5}Branch instructions}{20}{subsection.3.5}%
+\contentsline {subsubsection}{\numberline {3.5.1}Branch}{20}{subsubsection.3.5.1}%
+\contentsline {section}{\numberline {4}Data Processing and Other Instructions}{21}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Arithmetic Operations}{21}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Shift Operations}{23}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Multiply Operations with Overflow}{23}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Multiply Operations with 64-bit results}{23}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}Multiply Operations with 128-bit results}{23}{subsection.4.5}%
+\contentsline {subsection}{\numberline {4.6}Division Operations}{23}{subsection.4.6}%
+\contentsline {subsection}{\numberline {4.7}Comparison Operations}{23}{subsection.4.7}%
+\contentsline {subsection}{\numberline {4.8}Conditional Operations}{23}{subsection.4.8}%
+\contentsline {section}{\numberline {5}Structured Programming}{24}{section.5}%
+\contentsline {section}{\numberline {6}Section Title}{25}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Subsection Title}{25}{subsection.6.1}%
+\contentsline {subsubsection}{\numberline {6.1.1}Subsubsection Title}{25}{subsubsection.6.1.1}%
+\contentsline {paragraph}{Paragraph Title}{26}{paragraph*.23}%
+\contentsline {section}{\numberline {7}Short version of long section title}{26}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Short version of long subsection title}{26}{subsection.7.1}%
+\contentsline {subsubsection}{\numberline {7.1.1}In mi mauris, finibus non faucibus non, imperdiet nec leo. In erat arcu, tincidunt nec aliquam et, volutpat eget}{26}{subsubsection.7.1.1}%
+\contentsline {section}{\numberline {8}Font Examples}{26}{section.8}%
+\contentsline {subsection}{\numberline {8.1}Font Sizes}{26}{subsection.8.1}%
+\contentsline {subsection}{\numberline {8.2}Font Families}{27}{subsection.8.2}%
+\contentsline {subsection}{\numberline {8.3}Font Weights}{27}{subsection.8.3}%
+\contentsline {subsection}{\numberline {8.4}Condensed Fonts}{27}{subsection.8.4}%
+\contentsline {section}{\numberline {9}Quotations}{27}{section.9}%
+\contentsline {section}{\numberline {10}Table Examples}{28}{section.10}%
+\contentsline {section}{\numberline {11}Figure Examples}{28}{section.11}%
+\contentsline {section}{\numberline {12}List Examples}{29}{section.12}%
+\contentsline {subsection}{\numberline {12.1}Bullet Point List}{29}{subsection.12.1}%
+\contentsline {subsection}{\numberline {12.2}Numbered List}{29}{subsection.12.2}%
+\contentsline {subsection}{\numberline {12.3}Description List}{30}{subsection.12.3}%
+\contentsline {section}{\numberline {13}Referencing Citations}{31}{section.13}%
+\contentsline {section}{\numberline {14}Link Examples}{31}{section.14}%
+\contentsline {section}{\numberline {15}Equation}{31}{section.15}%
+\contentsline {section}{\numberline {16}International Support}{31}{section.16}%
+\contentsline {section}{\numberline {17}Displaying Code}{31}{section.17}%
+\contentsline {section}{Reference List}{33}{lstnumber.-13.16}%
+\contentsline {section}{\numberline {A}Big Nu}{35}{appendix.a.A}%
+\contentsline {section}{\numberline {B}Appendix Section}{35}{appendix.a.B}%
+\contentsline {section}{\numberline {C}Appendix Section}{36}{appendix.a.C}%
+\contentsfinish 
