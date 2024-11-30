@@ -1,6 +1,4 @@
-#include <stdio.h>
-#include <stdint.h>
-#include <inttypes.h>
+#include "config.h"
 
 extern void bn_add_asm(uint64_t *res, const uint64_t *op1, const uint64_t *op2, int32_t n);
 

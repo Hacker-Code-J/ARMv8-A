@@ -8,9 +8,9 @@ BIN_DIR = bin
 # Compiler, Assembler, and Flags
 CC = aarch64-linux-gnu-gcc
 AS = aarch64-linux-gnu-as
-CFLAGS = -g -c           # -g for debugging, -c for compiling without linking
-ASFLAGS = -g             # -g for debugging
-LDFLAGS =                # Additional linker flags
+CFLAGS = -g -c -Iinclude
+ASFLAGS = -g             
+LDFLAGS =                
 
 # Source and Object Files
 C_SRCS = $(wildcard $(SRC_DIR)/*.c)
