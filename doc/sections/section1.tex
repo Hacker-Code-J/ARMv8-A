@@ -1,0 +1,60 @@
+\section{ARM64 Architecture}
+
+ARM64 (AArch64) is a 64-bit architecture developed by ARM Holdings, widely used in modern mobile devices and servers.\par
+ARM64 offers a significant register file structure, with 31 general-purpose registers and special-purpose registers such as the Program Counter (PC) and Stack Pointer (SP). These registers provide flexibility for performing low-level operations efficiently.
+
+\paragraph{Key Features}
+\begin{itemize}
+	\item 64-bit general-purpose registers (X0-X30).
+	\item Special-purpose registers for the stack, program control, and more.
+	\item Optimized function calling convention.
+\end{itemize}
+\input{sections/section1-memory}
+\newpage
+\input{sections/section1-perform}
+\newpage
+\subsubsection{Quantifying Performance}
+
+Understanding performance is crucial in evaluating computer systems. We use metrics such as \textbf{response time} (or \textit{execution time}) and \textbf{throughput} to measure the efficiency of a system. The relationship between performance and execution time is inversely proportional:
+\[
+\text{Performance} = \frac{1}{\text{Execution Time}}
+\]
+
+This relationship allows us to compare two systems, X and Y:
+\[
+\text{n} = \frac{\text{Performance}_X}{\text{Performance}_Y} = \frac{\text{Execution Time}_Y}{\text{Execution Time}_X}
+\]
+
+\subsubsection{Illustrating Performance Comparison}
+
+The following diagram represents the comparison between two systems, X and Y, in terms of their execution time and throughput:
+
+\begin{center}
+	\begin{tikzpicture}[scale=1.2, every node/.style={scale=0.9}]
+		% Draw the axes
+		\draw[->] (0,0) -- (6,0) node[anchor=north] {Execution Time (seconds)};
+		\draw[->] (0,0) -- (0,4) node[anchor=east] {Performance (Tasks/sec)};
+		
+		% Draw bars for X and Y
+		\draw[fill=blue!30] (1,0) rectangle (2,2.5) node[midway, anchor=south, yshift=0.1cm] {X};
+		\draw[fill=red!30] (3,0) rectangle (4,3.5) node[midway, anchor=south, yshift=0.1cm] {Y};
+		
+		% Annotations
+		\draw[<->] (1,2.6) -- (4,3.6) node[midway, above, sloped] {Higher throughput};
+		\node[anchor=south west] at (2.1, 2.6) {Execution Time$_X$};
+		\node[anchor=south west] at (4.1, 3.6) {Execution Time$_Y$};
+		
+		% Dashed lines for reference
+		\draw[dashed] (1,2.5) -- (2,2.5);
+		\draw[dashed] (3,3.5) -- (4,3.5);
+	\end{tikzpicture}
+\end{center}
+
+In this example:
+\begin{itemize}
+	\item System X has a shorter execution time, indicating higher performance for a given task.
+	\item System Y has a longer execution time, leading to lower performance compared to X.
+\end{itemize}
+
+\newpage
+

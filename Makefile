@@ -1,61 +1,62 @@
-# Makefile for AArch64 Assembly project
+# Makefile for AArch64 C and Assembly Project
 
 # Directories
 SRC_DIR = src
 OBJ_DIR = obj
 BIN_DIR = bin
 
-# Output executable name
-TARGET = $(BIN_DIR)/program
+# Compiler, Assembler, and Flags
+CC = aarch64-linux-gnu-gcc
+AS = aarch64-linux-gnu-as
+CFLAGS = -g -c           # -g for debugging, -c for compiling without linking
+ASFLAGS = -g             # -g for debugging
+LDFLAGS =                # Additional linker flags
 
-# Compiler and flags
-AS = as
-LD = ld
-ASFLAGS = -g            # -g for debugging support
-LDFLAGS =               # Flags for the linker
+# Source and Object Files
+C_SRCS = $(wildcard $(SRC_DIR)/*.c)
+ASM_SRCS = $(wildcard $(SRC_DIR)/*.s)
+OBJS = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(C_SRCS)) \
+       $(patsubst $(SRC_DIR)/%.s, $(OBJ_DIR)/%.o, $(ASM_SRCS))
 
-# List of source files (.s files in src directory)
-SRCS = $(wildcard $(SRC_DIR)/*.s)
+# Extract the base name of the main source file for the target name
+MAIN_SRC = $(basename $(notdir $(filter $(SRC_DIR)/main.c,$(C_SRCS))))
+TARGET = $(BIN_DIR)/$(MAIN_SRC)
 
-# Object files (same names as source files, but in the obj directory)
-# OBJS = $(SRCS:$(SRC_DIR)/%.s=$(OBJ_DIR)/%.o)
-OBJS = $(patsubst $(SRC_DIR)/%.s, $(OBJ_DIR)/%.o, $(SRCS))
+# Default target
+all: $(TARGET)
 
-# Default target: build the program
-all: dir $(TARGET)
+# Ensure directories exist
+$(OBJ_DIR) $(BIN_DIR):
+	@mkdir -p $@
 
-dir:
-	@mkdir -p $(BIN_DIR) $(OBJ_DIR)
-
-# Create bin directory if it doesn't exist
-# $(BIN_DIR):
-# 	@mkdir -p $(BIN_DIR)
-
-# Create obj directory if it doesn't exist
-# $(OBJ_DIR):
-# 	@mkdir -p $(OBJ_DIR)
-
-
-# Rule to build the target executable
+# Build target executable
 $(TARGET): $(OBJS) | $(BIN_DIR)
-# @echo "Linking..."
-	$(LD) $(LDFLAGS) -o $(TARGET) $(OBJS)
-# @echo "Build complete."
+	@echo "Linking..."
+	$(CC) -g -o $@ $(OBJS)
+	@echo "Build complete: $(TARGET)"
 
-# Rule to assemble .s files into .o object files
+# Compile C source files
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
+	@echo "Compiling C source: $<"
+	$(CC) $(CFLAGS) -o $@ $<
+
+# Assemble Assembly source files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.s | $(OBJ_DIR)
-# @echo "Assembling $<..."
+	@echo "Assembling ASM source: $<"
 	$(AS) $(ASFLAGS) -o $@ $<
 
-# Clean build files
+# Clean up build files
 clean:
-# @echo "Cleaning up..."
-	rm -rf $(OBJ_DIR)/* $(BIN_DIR)/*
+	@echo "Cleaning up build files..."
+	rm -rf $(OBJ_DIR) $(BIN_DIR)
 
-run: 
-	./$(TARGET)
-
+# Rebuild from scratch
 rebuild: clean all
 
-# Phony targets (to avoid conflicts with files named 'clean', etc.)
-.PHONY: all clean
+# Run the program
+run: $(TARGET)
+	@echo "Running program..."
+	./$(TARGET)
+
+# Phony targets to prevent conflicts
+.PHONY: all clean rebuild run

@@ -1,0 +1,111 @@
+\documentclass{standalone}
+\input{../tikz}
+
+\begin{document}
+\begin{tikzpicture}[>=Stealth, line width=.5mm]
+	\def \x{15}
+	\def \y{10}
+%	\draw[very thin,color=gray!15,step=.5] (-\x,-\y) grid (\x,\y);
+%	
+%	\foreach \i in {-\x,...,-2,-1,1,2,...,\x}
+%	\draw[gray] (\i,.1)--(\i,-.1) node[below] {$\i$};%x-axis
+%	\foreach \i in {-\y,-1,1,1,\y}
+%	\draw[gray] (.1,\i)--(-.1,\i) node[left] {$\i$};%y-axis
+
+% Processor Core Section
+\begin{scope}[xshift=-2cm]
+	% ALU Section (at x = -2)
+	\draw[] (-10, -2) -- (-8, -3) -- (-8, -.5) -- (-8.5, 0) -- (-8, .5) -- (-8, 3) -- (-10, 2) -- cycle node[midway, right] {\large\bf ALU};
+	\draw[->] (-10, 0) to (-11, 0);
+	\draw[->] (-7, 2) to (-8, 2);
+	\draw[->] (-7, -2) to (-8, -2);
+
+	% Registers section (left side)
+	\node[above] at (-2.5, 5) {\large\bf Registers};
+	\draw[] (-5, -5) rectangle (0, 5); % Outer box
+	\foreach \i in {0, 1, 2, 3} {
+		\node[anchor=west] at (-6, 4.5-\i) {X\i};
+	}
+	\foreach \i in {27, 28, 29, 30} {
+		\node[anchor=west] at (-6, -1.5-\i+27) {x\i};
+	}
+	\node[align=center,scale=.7] at (-5.5, 0) {$\bullet$\\ $\bullet$\\ $\bullet$};
+	\node[align=center,scale=.7] at (-2.5, 0) {$\bullet$\\ $\bullet$\\ $\bullet$};
+	\foreach \i in {4,3,2,1} {
+		\draw (-5,\i) -- (0, \i);
+		\draw (-5,-\i) -- (0, -\i);
+	}
+	\draw[] (-5, -5.25) to (-5, -5.75);
+	\draw[] (0, -5.25) to (0, -5.75);
+	\draw[<->] (-5, -5.5) to (0, -5.5);
+	\node[below] at (-2.5, -5.5) {\large $64$-bit};
+	\draw[dashed] (-12, -6.5) rectangle (1, 6.5);
+	\node[below] at (-5.5, -7) {\Huge\bf Processor Core};
+	
+	\node[red] at (-2.5, 2.5) {\texttt{0x000000555555076c}};
+	\node[blue] at (-2.5, 1.5) {\texttt{0x8ada0fd0eddaebfe}};
+	
+	
+	\draw[red, line width=1mm] (-5, 2) rectangle (0, 3);
+	\draw[blue, line width=1mm] (-5, 1) rectangle (0, 2);
+\end{scope}
+	
+% Memory section (right side)
+\begin{scope}[xshift=7cm]
+	\node[magenta, above] at (1, 5) {\large\bf Contents};
+	\node[cyan, above] at (4, 5) {\large\bf Address};
+	% Contents
+	\draw[] (0, -4) rectangle (2, 4); % Outer box
+	\draw[dotted] (2, -4) rectangle (6, 4); % Outer box
+	\foreach \i in {3,2,1,0} {
+		\draw (0,\i) -- (2, \i);
+		\draw (0,-\i) -- (2, -\i);
+	}
+	% Address
+	\foreach \i in {3,2,1,0} {
+		\draw[dotted] (2,\i) -- (6, \i);
+		\draw[dotted] (2,-\i) -- (6, -\i);
+	}
+	\draw (0,4) to (0,4.5); \draw (2,4) to (2,5);
+	\draw[smooth] plot coordinates {(0,4.5) (.5, 5) (1.5, 4.5) (2,5)};
+	\draw (0,-4) to (0,-5); \draw (2,-4) to (2,-4.5);
+	\draw[smooth] plot coordinates {(2,-4.5) (1.5, -5) (.5, -4.5) (0,-5)};
+	\draw[dashed] (-1, -6.5) rectangle (7, 6.5);
+	\node[below] at (3, -7) {\Huge\bf Memory};
+	
+	\foreach \i/\j in {
+		3.5/0x8a,
+		2.5/0xda,
+		1.5/0x0f,
+		.5/0xd0,
+		-.5/0xed,
+		-1.5/0xda,
+		-2.5/0xeb,
+		-3.5/0xfe
+	} {
+		\node[magenta] at (1, \i) {\texttt{\j}};
+	}
+	
+	\foreach \i/\j in {
+		3.5/0x0000005555550773,
+		2.5/0x0000005555550772,
+		1.5/0x0000005555550771,
+		.5/0x0000005555550770,
+		-.5/0x000000555555076f,
+		-1.5/0x000000555555076e,
+		-2.5/0x000000555555076d,
+		-3.5/0x000000555555076c
+	} {
+		\node[cyan] at (4, \i) {\texttt{\j}};
+	}
+
+	\draw[red, line width=1mm] (2, -4) rectangle (6, -3);
+	\draw[blue, line width=1mm] (0, -4) rectangle (2, 4);
+	
+	\draw[dotted, red, line width=1mm, <->, out=-90, in=0] (4, -4) to (-9,2.5) node[above right] {\Large\ttfamily sp};
+	\draw[dotted, blue, line width=1mm, <->, out=-90, in=0] (1, -4) to (-9,1.5) node[above right] {\Large\ttfamily Xn};
+\end{scope}
+%\node[below] at (2.5,4) {\Huge\ttfamily ldr\hspace{1cm} x3, [x2]};
+%\node[above] at (2.5,-5) {\Huge\ttfamily str\hspace{1cm} x3, [x2]};
+\end{tikzpicture}
+\end{document}
