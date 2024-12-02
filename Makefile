@@ -5,6 +5,8 @@ SRC_DIR = src
 OBJ_DIR = obj
 BIN_DIR = bin
 
+TEST_DIR = test
+
 # Compiler, Assembler, and Flags
 CC = aarch64-linux-gnu-gcc
 AS = aarch64-linux-gnu-as
@@ -14,9 +16,11 @@ LDFLAGS =
 
 # Source and Object Files
 C_SRCS = $(wildcard $(SRC_DIR)/*.c)
+TEST_SRCS = $(wildcard $(TEST_DIR)/*.c)
 ASM_SRCS = $(wildcard $(SRC_DIR)/*.s)
 OBJS = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(C_SRCS)) \
-       $(patsubst $(SRC_DIR)/%.s, $(OBJ_DIR)/%.o, $(ASM_SRCS))
+       $(patsubst $(TEST_DIR)/%.c, $(OBJ_DIR)/%.o, $(TEST_SRCS)) \
+       $(patsubst $(SRC_DIR)/%.s, $(OBJ_DIR)/%.o, $(ASM_SRCS)) 
 
 # Extract the base name of the main source file for the target name
 MAIN_SRC = $(basename $(notdir $(filter $(SRC_DIR)/main.c,$(C_SRCS))))
@@ -31,18 +35,23 @@ $(OBJ_DIR) $(BIN_DIR):
 
 # Build target executable
 $(TARGET): $(OBJS) | $(BIN_DIR)
-	@echo "Linking..."
+#	@echo "Linking..."
 	$(CC) -g -o $@ $(OBJS)
-	@echo "Build complete: $(TARGET)"
+#	@echo "Build complete: $(TARGET)"
 
 # Compile C source files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
-	@echo "Compiling C source: $<"
+#	@echo "Compiling C source: $<"
+	$(CC) $(CFLAGS) -o $@ $<
+
+# Compile C source files in 'test' folder
+$(OBJ_DIR)/%.o: $(TEST_DIR)/%.c | $(OBJ_DIR)
+#	@echo "Compiling C source: $<"
 	$(CC) $(CFLAGS) -o $@ $<
 
 # Assemble Assembly source files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.s | $(OBJ_DIR)
-	@echo "Assembling ASM source: $<"
+#	@echo "Assembling ASM source: $<"
 	$(AS) $(ASFLAGS) -o $@ $<
 
 # Clean up build files
@@ -55,7 +64,7 @@ rebuild: clean all
 
 # Run the program
 run: $(TARGET)
-	@echo "Running program..."
+#	@echo "Running program..."
 	./$(TARGET)
 
 # Phony targets to prevent conflicts
