@@ -1,9 +1,11 @@
-#ifndef _CONFIG_H_
-#define _CONFIG_H_
-
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdint.h>         // for uint8_t
 #include <inttypes.h>       // for PRIx64
+#include <time.h>
+
+#ifndef _CONFIG_H_
+#define _CONFIG_H_
 
 typedef int8_t      i8;
 typedef int32_t     i32;

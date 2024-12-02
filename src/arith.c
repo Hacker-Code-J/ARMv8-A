@@ -1,6 +1,22 @@
 #include "arith.h"
 
-uint32_t bn_add_c(uint64_t *ret, uint64_t *opA, uint64_t *opB, int32_t len) {
+/* My Code */
+u32 bn_add_c(u64* res, u64* op1, u64* op2, i32 len) {
+    u64 tmp;
+    u64 carry = 0;
+
+    /* ret = op1 + op2 mod 2^32 
+    *
+    * 
+    */
+    for (int idx = 0; idx < len; idx++) {
+        tmp = op1[idx] + carry;
+
+    }
+}
+
+/* Sample Code */
+uint32_t bn_add_c_sample(uint64_t *ret, uint64_t *opA, uint64_t *opB, int32_t len) {
     int32_t cnt_i;
     uint64_t carry = 0, temp = 0;
 

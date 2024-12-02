@@ -27,7 +27,7 @@ add_shift_asm:
 
 	.size add_shift_asm, (. - add_asm)
 
-// int32_t bn_add_asm(uint64_t *ret, uint64_t *opA, uint64_t *opB, int32_t len)
+// uint32_t bn_add_asm(uint64_t *ret, uint64_t *opA, uint64_t *opB, int32_t len)
 // x0: ptr of ret, x1: ptr of opA, x2: ptr of opB, w3: len
 // x4: ret
 // x5: opA

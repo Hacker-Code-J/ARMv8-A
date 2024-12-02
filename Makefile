@@ -6,11 +6,12 @@ OBJ_DIR = obj
 BIN_DIR = bin
 
 TEST_DIR = test
+MEASURE_DIR = measure
 
 # Compiler, Assembler, and Flags
 CC = aarch64-linux-gnu-gcc
 AS = aarch64-linux-gnu-as
-CFLAGS = -g -c -Iinclude
+CFLAGS = -g -Wall -Wextra -c -Iinclude
 ASFLAGS = -g             
 LDFLAGS =                
 
@@ -18,9 +19,11 @@ LDFLAGS =
 C_SRCS = $(wildcard $(SRC_DIR)/*.c)
 TEST_SRCS = $(wildcard $(TEST_DIR)/*.c)
 ASM_SRCS = $(wildcard $(SRC_DIR)/*.s)
+MEASURE_SRCS = $(wildcard $(MEASURE_DIR)/*.c)
 OBJS = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(C_SRCS)) \
        $(patsubst $(TEST_DIR)/%.c, $(OBJ_DIR)/%.o, $(TEST_SRCS)) \
-       $(patsubst $(SRC_DIR)/%.s, $(OBJ_DIR)/%.o, $(ASM_SRCS)) 
+       $(patsubst $(SRC_DIR)/%.s, $(OBJ_DIR)/%.o, $(ASM_SRCS)) \
+       $(patsubst $(MEASURE_DIR)/%.c, $(OBJ_DIR)/%.o, $(MEASURE_SRCS)) 
 
 # Extract the base name of the main source file for the target name
 MAIN_SRC = $(basename $(notdir $(filter $(SRC_DIR)/main.c,$(C_SRCS))))
@@ -53,6 +56,11 @@ $(OBJ_DIR)/%.o: $(TEST_DIR)/%.c | $(OBJ_DIR)
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.s | $(OBJ_DIR)
 #	@echo "Assembling ASM source: $<"
 	$(AS) $(ASFLAGS) -o $@ $<
+
+# Compile C source files in 'measure' folder
+$(OBJ_DIR)/%.o: $(MEASURE_DIR)/%.c | $(OBJ_DIR)
+#	@echo "Compiling C source: $<"
+	$(CC) $(CFLAGS) -o $@ $<
 
 # Clean up build files
 clean:
