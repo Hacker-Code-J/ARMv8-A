@@ -19,44 +19,33 @@ void test1() {
 
 void test2() {
 	int32_t cnt_i;
-	uint64_t opA1[P256_64BIT_WORD_LEN] = {0, }, opB1[P256_64BIT_WORD_LEN] = {0, }, ret1[P256_64BIT_WORD_LEN] = {0, };
-	uint64_t opA2[P256_64BIT_WORD_LEN] = {0, }, opB2[P256_64BIT_WORD_LEN] = {0, }, ret2[P256_64BIT_WORD_LEN] = {0, };
-	uint32_t carry1 = 0, carry2 = 0;
+	uint64_t opA[P256_64BIT_WORD_LEN] = {0, },
+			 opB[P256_64BIT_WORD_LEN] = {0, },
+			 ret1[P256_64BIT_WORD_LEN] = {0, },
+			 ret2[P256_64BIT_WORD_LEN] = {0, },
+			 ret3[P256_64BIT_WORD_LEN] = {0, };
 
 	srand(time(NULL));
 
-	for(cnt_i = 0; cnt_i < P256_64BIT_WORD_LEN; cnt_i++)
-	{
-		opA1[cnt_i] = (generate_random_64bit());
-		// opA1[cnt_i] <<= 16;
-		// opA1[cnt_i] |= (generate_random_64bit());
-		// opA1[cnt_i] <<= 16;
-		// opA1[cnt_i] |= (generate_random_64bit());
-		// opA1[cnt_i] <<= 16;
-		// opA1[cnt_i] |= (generate_random_64bit());
-
-		opA2[cnt_i] = opA1[cnt_i];
-
-		opB1[cnt_i] = (generate_random_64bit());
-		// opB1[cnt_i] <<= 16;
-		// opB1[cnt_i] |= (generate_random_64bit());
-		// opB1[cnt_i] <<= 16;
-		// opB1[cnt_i] |= (generate_random_64bit());
-		// opB1[cnt_i] <<= 16;
-		// opB1[cnt_i] |= (generate_random_64bit());
-
-		opB2[cnt_i] = opB1[cnt_i];
+	for(cnt_i = 0; cnt_i < P256_64BIT_WORD_LEN; cnt_i++) {
+		opA[cnt_i] = (generate_random_64bit());
+		opB[cnt_i] = (generate_random_64bit());
 	}
 
-	carry1 = bn_add_c_sample(ret1, opA1, opB1, P256_64BIT_WORD_LEN);
-	carry2 = bn_add_asm(ret2, opA2, opB2, P256_64BIT_WORD_LEN);
+	u32 carry1 = bn_add_c(ret1, opA, opB, P256_64BIT_WORD_LEN);
+	u32 carry2 = bn_add_c_sample(ret2, opA, opB, P256_64BIT_WORD_LEN);
+	u32 carry3 = bn_add_asm(ret3, opA, opB, P256_64BIT_WORD_LEN);
 
-	bn_print("opA", opA1, P256_64BIT_WORD_LEN);
-	bn_print("opB", opB1, P256_64BIT_WORD_LEN);
+	printf("%d %d %d\n", carry1, carry2, carry3);
+
+	bn_print("opA", opA, P256_64BIT_WORD_LEN);
+	bn_print("opB", opB, P256_64BIT_WORD_LEN);
 
 	bn_print("ret1", ret1, P256_64BIT_WORD_LEN);
 	bn_print("ret2", ret2, P256_64BIT_WORD_LEN);
+	bn_print("ret2", ret3, P256_64BIT_WORD_LEN);
 
-	measure_clock_cycles(bn_add_c_sample, ret1, opA1, opB1, P256_64BIT_WORD_LEN);
-	measure_clock_cycles(bn_add_asm, ret1, opA1, opB1, P256_64BIT_WORD_LEN);
+	measure_clock_cycles(bn_add_c_sample, ret1, opA, opB, P256_64BIT_WORD_LEN);
+	measure_clock_cycles(bn_add_c_sample, ret1, opA, opB, P256_64BIT_WORD_LEN);
+	measure_clock_cycles(bn_add_asm, ret1, opA, opB, P256_64BIT_WORD_LEN);
 }

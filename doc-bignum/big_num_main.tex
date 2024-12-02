@@ -1,0 +1,52 @@
+\documentclass[12pt,openany]{book}
+
+\input{preamble}
+\input{command}
+
+\begin{document}	
+	% Title page
+	\begin{titlepage}
+		\begin{center}
+			{\Huge\textsf{\textbf{Big Number Arithmetic}}\par}
+			{\Large\textsf{\textbf{- Implementation with C and ASM -}}\par}
+			\vspace{0.5in}
+			{\Large {Ji Yong-Hyeon}\par}
+			\vspace{1in}
+%			\includegraphics[scale=.6]{images/AES_Encryption_Round.png}\par
+			\vspace{1in}
+			{\large\bf \textsf{Department of Information Security, Cryptology, and Mathematics}\par}
+			{\textsf{College of Science and Technology}\par}
+			{\textsf{Kookmin University}\par}
+			\vspace{.25in}
+			{\large \textsf{\today}\par}
+		\end{center}
+	\end{titlepage}
+	
+	\frontmatter
+%	\input{front/acknowledgements.tex}
+%	\input{front/abstract.tex}
+	
+	\newpage
+	\tableofcontents
+	\newpage
+	\mainmatter
+	\input{cores/bignum_add}
+	
+	
+	\newpage
+	\input{chapters/ecc_ch1_add_sub.tex} %
+	\input{chapters/ecc_ch1_mul_squ.tex} %
+	\input{chapters/ecc_ch1_red.tex} %
+	\input{chapters/chapter1.tex}
+	\input{chapters/chapter2.tex}
+	% Include more chapters as needed
+	
+	\appendix
+%	\input{appendices/appendixA.tex}
+%	\input{appendices/appendixB.tex}
+	\input{appendices/bibilography.tex}
+	
+	\backmatter
+	% Bibliography, index, etc.
+	
+\end{document}

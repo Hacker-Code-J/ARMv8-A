@@ -11,8 +11,11 @@ u32 bn_add_c(u64* res, u64* op1, u64* op2, i32 len) {
     */
     for (int idx = 0; idx < len; idx++) {
         tmp = op1[idx] + carry;
-
+        carry = (tmp < carry);
+        tmp += op2[idx];
+        res[idx] = tmp;
     }
+    return carry;
 }
 
 /* Sample Code */

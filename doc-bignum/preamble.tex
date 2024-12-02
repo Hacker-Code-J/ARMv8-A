@@ -1,5 +1,3 @@
-\documentclass[12pt,openany]{book}
-
 % Preamble with packages, custom commands, etc.
 \usepackage{commath, amsmath, amsthm}
 \usepackage{polynomial}
@@ -122,8 +120,55 @@
 }
 
 %Tcolorbox
-\usepackage[most]{tcolorbox}
+\usepackage{tcolorbox}
 \tcbset{colback=white, arc=5pt}
+
+\definecolor{axiomcolor}{HTML}{a88bfa}
+\definecolor{defcolor}{RGB}{52, 152, 219}
+\definecolor{procolor}{RGB}{241, 196, 15}
+\definecolor{thmcolor}{RGB}{231, 76, 60}
+\definecolor{lemcolor}{RGB}{155, 89, 182}
+\definecolor{corcolor}{RGB}{46, 204, 113}
+\definecolor{execolor}{RGB}{90, 128, 127}
+
+% Define a new command for the custom tcolorbox
+\newcommand{\axiombox}[2][]{%
+	\begin{tcolorbox}[colframe=axiomcolor, title={\color{white}\bfseries #1}]
+		#2
+	\end{tcolorbox}
+}
+
+\newcommand{\defbox}[2][]{%
+	\begin{tcolorbox}[colframe=defcolor, title={\color{white}\bfseries #1}]
+		#2
+	\end{tcolorbox}
+}
+
+\newcommand{\lembox}[2][]{%
+	\begin{tcolorbox}[colframe=lemcolor, title={\color{white}\bfseries #1}]
+		#2
+	\end{tcolorbox}
+}
+
+\newcommand{\probox}[2][]{%
+	\begin{tcolorbox}[colframe=procolor, title={\color{white}\bfseries #1}]
+		#2
+	\end{tcolorbox}
+}
+
+\newcommand{\thmbox}[2][]{%
+	\begin{tcolorbox}[colframe=thmcolor, title={\color{white}\bfseries #1}]
+		#2
+	\end{tcolorbox}
+}
+
+\newcommand{\corbox}[2][]{%
+	\begin{tcolorbox}[colframe=corcolor, title={\color{white}\bfseries #1}]
+		#2
+	\end{tcolorbox}
+}
+
+
 
 % Listings
 \usepackage{listings}
@@ -189,7 +234,15 @@
 	{:}{{\textcolor{red}{:}}}1
 	{~}{{\textcolor{red}{\textasciitilde}}}1, % Color certain characters
 }
-
+\lstdefinestyle{normal}{
+	basicstyle=\ttfamily\small,
+	linewidth=\textwidth,  % Sets the listing width to match the text width
+	frame=single, % Border
+	basicstyle=\tt\scriptsize, % Code font style
+	breaklines=true, % Break long lines into multiple lines automatically
+	aboveskip=2\baselineskip, % Vertical whitespace before the listing
+	tabsize=4, % How many space to a tab
+}
 % Usage: \lstinputlisting[style=zsh]{sourcefile.sh}
 % or \begin{lstlisting}[style=zsh] ... \end{lstlisting}
 
@@ -219,80 +272,3 @@
 
 
 \newcommand{\mathcolorbox}[2]{\colorbox{#1}{$\displaystyle #2$}}
-
-\newcommand{\of}[1]{\left(#1\right)}
-
-\newcommand{\N}{\mathbb{N}}
-\newcommand{\Z}{\mathbb{Z}}
-\newcommand{\Q}{\mathbb{Q}}
-\newcommand{\R}{\mathbb{R}}
-\newcommand{\C}{\mathbb{C}}
-\newcommand{\F}{\mathbb{F}}
-\newcommand{\zero}{\textcolor{red}{\texttt{0}}}
-\newcommand{\one}{\textcolor{red}{\texttt{1}}}
-\newcommand{\binaryfield}{\set{\zero,\one}}
-
-\newcommand{\ie}{\textnormal{i.e.}}
-\newcommand{\sol}{\textcolor{magenta}{\bf Solution.\ }}
-
-\newcommand{\yes}{\textcolor{blue}{O}}
-\newcommand{\no}{\textcolor{red}{X}}
-
-\newcommand{\adjacent}{\parallel}
-
-\newcommand{\src}{\mathsf{src}}
-\newcommand{\dsc}{\mathsf{dsc}}
-\newcommand{\state}{\mathsf{state}}
-\newcommand{\data}{\mathsf{data}}
-
-\newcommand{\len}{\mathsf{len}}
-\newcommand{\bit}{\mathsf{bit}}
-\newcommand{\byte}{\mathsf{byte}}
-\newcommand{\word}{\mathsf{word}}
-
-\newcommand{\MontRed}{\mathsf{MontRed}}
-
-\begin{document}	
-	% Title page
-	\begin{titlepage}
-		\begin{center}
-			{\Huge\textsf{\textbf{Elliptic Curve Cryptograph}}\par}
-			{\Large\textsf{\textbf{- Learning ECC -}}\par}
-			\vspace{0.5in}
-			{\Large {Ji Yong-Hyeon}\par}
-			\vspace{1in}
-%			\includegraphics[scale=.6]{images/AES_Encryption_Round.png}\par
-			\vspace{1in}
-			{\large\bf \textsf{Department of Information Security, Cryptology, and Mathematics}\par}
-			{\textsf{College of Science and Technology}\par}
-			{\textsf{Kookmin University}\par}
-			\vspace{.25in}
-			{\large \textsf{\today}\par}
-		\end{center}
-	\end{titlepage}
-	
-	\frontmatter
-	\input{front/acknowledgements.tex}
-%	\input{front/abstract.tex}
-	
-	\newpage
-	\tableofcontents
-	
-	\newpage
-	\mainmatter
-	\input{chapters/ecc_ch1_add_sub.tex} %
-	\input{chapters/ecc_ch1_mul_squ.tex} %
-	\input{chapters/ecc_ch1_red.tex} %
-	\input{chapters/chapter1.tex}
-	\input{chapters/chapter2.tex}
-	% Include more chapters as needed
-	
-	\appendix
-%	\input{appendices/appendixA.tex}
-%	\input{appendices/appendixB.tex}
-	\input{appendices/bibilography.tex}
-	
-	\backmatter
-	% Bibliography, index, etc.
-	
-\end{document}

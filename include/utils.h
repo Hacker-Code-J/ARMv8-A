@@ -4,7 +4,7 @@
 #define _UTILS_H_
 
 void
-bn_print(char* str, uint64_t *data, int32_t len);
+bn_print(char* str, u64* data, i32 len);
 
 uint64_t generate_random_64bit();
 

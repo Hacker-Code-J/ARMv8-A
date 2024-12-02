@@ -1,14 +1,10 @@
 #include "utils.h"
 
-void bn_print(char* str, uint64_t *data, int32_t len) {
-	int32_t cnt_i;
-	
-	printf("\n[%s]\n", str);
-	for(cnt_i = len-1; cnt_i >= 0; cnt_i--)
-	{
-		printf("%lx ", data[cnt_i]);
-	}
-	printf("\n");
+void bn_print(char* str, u64* data, i32 len) {
+	printf("\n[%s] ", str);
+	for(i32 idx = len-1; idx >= 0; idx--)
+		printf("%lx ", data[idx]);
+	puts("");
 }
 
 uint64_t generate_random_64bit() {
