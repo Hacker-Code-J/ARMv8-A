@@ -1,8 +1,7 @@
-
 .section .text
-.global multiplicationModuloP2
+.global multiplicationModuloP1
 
-multiplicationModuloP2:
+multiplicationModuloP1:
     // Input:
     // w0 = a (32-bit unsigned)
     // w1 = b (32-bit unsigned)
@@ -10,23 +9,50 @@ multiplicationModuloP2:
     // Multiply a and b as 64-bit values
     mul x2, x0, x1            // x2 = a * b (full 64-bit result)
 
-    // Calculate r >> LOG_Q (LOG_Q = 32)
-    lsr x3, x2, #32           // x3 = r >> 32
+    // Calculate r >> LOG_Q
+    lsr x3, x2, #32           // x3 = r >> LOG_Q (logical shift right by 32 bits)
 
-    // Load PRIME (0xFFFFFFFB) directly into x4
-    movz x4, #0xFFFB          // Load lower 16 bits
-    movk x4, #0xFFFF, lsl #16 // Load middle 16 bits
-    movk x4, #0xFFFF, lsl #32 // Load upper 16 bits
+    // Load PRIME (0xFFFFFFFB) into x4
+    mov x4, #0xFFFB          // Load lower 16 bits of PRIME
+    movk x4, #0xFFFF, lsl #16 // Load upper 16 bits of PRIME (middle word)
+    // movk x4, #0xFFFF, lsl #32 // Load upper 16 bits of PRIME (top word)
 
     // Multiply (r >> LOG_Q) by PRIME
-    mul x3, x3, x4            // x3 = (r >> LOG_Q) * PRIME
+    mul x3, x3, x4            // x3 = PRIME * (r >> LOG_Q)
 
     // Subtract (r >> LOG_Q) * PRIME from r
-    sub x0, x2, x3            // x0 = r - (r >> LOG_Q) * PRIME
+    sub x0, x2, x3            // x2 = r - PRIME * (r >> LOG_Q)
 
-    // Return the result in x0
+    // Return the result
     ret
 
+
+
+.global multiplicationModuloP2
+
+multiplicationModuloP2:
+    // Multiply a and b as 64-bit values
+    mul x2, x0, x1            // x2 = a * b (full 64-bit result)
+
+    // Calculate r >> LOG_Q
+    lsr x3, x2, #32           // x3 = r >> LOG_Q (logical shift right by 32 bits)
+
+    // Load PRIME (0xFFFFFFFB) into x4
+    mov x4, #0xFFFB          // Load lower 16 bits of PRIME
+    movk x4, #0xFFFF, lsl #16 // Load upper 16 bits of PRIME (middle word)
+    // movk x4, #0xFFFF, lsl #32 // Load upper 16 bits of PRIME (top word)
+
+    // Multiply (r >> LOG_Q) by PRIME
+    mul x3, x3, x4            // x3 = PRIME * (r >> LOG_Q)
+
+    // Subtract (r >> LOG_Q) * PRIME from r
+    sub x0, x2, x3            // x2 = r - PRIME * (r >> LOG_Q)
+
+    // Return the result
+    ret
+
+
+/*
 .type    multiplicationModuloP3, %function
 .global  multiplicationModuloP3
 
@@ -55,3 +81,4 @@ multiplicationModuloP3:
 
     ret
 	.size multiplicationModuloP3, (. - multiplicationModuloP3)
+ */
