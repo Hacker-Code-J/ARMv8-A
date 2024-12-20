@@ -9,7 +9,7 @@
 #define PRIME   4294967291lu
 #define LOG_Q   32
 
-#define NUM_ITERATIONS 1000000 // Number of iterations for benchmarking
+#define NUM_ITERATIONS 10500 // Number of iterations for benchmarking
 
 uint64_t
 multiplicationModuloP_origin(const uint32_t a, const uint32_t b) {
@@ -205,52 +205,62 @@ void testInversionModuloP() {
 
 // Benchmarking function
 void benchmarkInversionFunctions() {
-    uint32_t testValue = 3; // Example input
+    uint32_t test_a = 0x00;
     uint64_t start, end;
     uint64_t totalCyclesP0 = 0, totalCyclesP = 0;
+    for (int i = 0; i < 10500; i++) {
+      srand((unsigned)time(NULL));
+      if (i > 499) {
+        generate_random_32bit(&test_a, 100);
+        // printf("a=0x%08x\n",test_a);
+        start = read_cycle_counter();
+        for (int i = 0; i < NUM_ITERATIONS; i++) {
+            volatile uint32_t result = inversionModuloP_origin(test_a);
+        }
+        end = read_cycle_counter();
+        totalCyclesP0 = end - start;
 
-    // Benchmark inversionModuloP1
-    start = read_cycle_counter();
-    for (int i = 0; i < NUM_ITERATIONS; i++) {
-        volatile uint32_t result = inversionModuloP_origin(testValue);
-    }
-    end = read_cycle_counter();
-    totalCyclesP0 = end - start;
+        // Benchmark inversionModuloP
+        start = read_cycle_counter();
+        for (int i = 0; i < NUM_ITERATIONS; i++) {
+            volatile uint32_t result = inversionModuloP(test_a);
+        }
+        end = read_cycle_counter();
+        totalCyclesP = end - start;
 
-    // Benchmark inversionModuloP
-    start = read_cycle_counter();
-    for (int i = 0; i < NUM_ITERATIONS; i++) {
-        volatile uint32_t result = inversionModuloP(testValue);
+        double cyclesPerTestP0 = (double)totalCyclesP0 / NUM_ITERATIONS;
+        double cyclesPerTestP = (double)totalCyclesP / NUM_ITERATIONS;
+    
+        printf("%.5f\n", cyclesPerTestP0);
+        printf("%.5f\n", cyclesPerTestP);
+      }
     }
-    end = read_cycle_counter();
-    totalCyclesP = end - start;
+    
 
     // Print results
     // Print results
-    double cyclesPerTestP0 = (double)totalCyclesP0 / NUM_ITERATIONS;
-    double cyclesPerTestP = (double)totalCyclesP / NUM_ITERATIONS;
-    printf("Cycles per test for inversionModuloP0: %.5f\n", cyclesPerTestP0);
-    printf("Cycles per test for inversionModuloP: %.5f\n", cyclesPerTestP);
-    printf("Benchmark Results (over %d tests):\n", NUM_ITERATIONS);
-    printf("inversionModuloP1: %lu clock cycles\n", totalCyclesP0);
-    printf("inversionModuloP: %lu clock cycles\n", totalCyclesP);
+    // printf("Cycles per test for inversionModuloP0: %.5f\n", cyclesPerTestP0);
+    // printf("Cycles per test for inversionModuloP: %.5f\n", cyclesPerTestP);
+    // printf("Benchmark Results (over %d tests):\n", NUM_ITERATIONS);
+    // printf("inversionModuloP1: %lu clock cycles\n", totalCyclesP0);
+    // printf("inversionModuloP: %lu clock cycles\n", totalCyclesP);
 
     // Compare performance
-    if (totalCyclesP0 < totalCyclesP) {
-        printf("inversionModuloP1 is faster by %.2f%%\n", ((double)(totalCyclesP - totalCyclesP0) / totalCyclesP) * 100);
-    } else if (totalCyclesP < totalCyclesP0) {
-        printf("inversionModuloP is faster by %.2f%%\n", ((double)(totalCyclesP0 - totalCyclesP) / totalCyclesP0) * 100);
-    } else {
-        printf("Both functions have similar performance.\n");
-    }
+    // if (totalCyclesP0 < totalCyclesP) {
+    //     printf("inversionModuloP1 is faster by %.2f%%\n", ((double)(totalCyclesP - totalCyclesP0) / totalCyclesP) * 100);
+    // } else if (totalCyclesP < totalCyclesP0) {
+    //     printf("inversionModuloP is faster by %.2f%%\n", ((double)(totalCyclesP0 - totalCyclesP) / totalCyclesP0) * 100);
+    // } else {
+    //     printf("Both functions have similar performance.\n");
+    // }
 }
 
 int main() {
     // Seed random number generator
     srand((unsigned)time(NULL));
-    testInversionModuloP();
-    printf("All tests passed!\n");
-    // benchmarkInversionFunctions();
+    // testInversionModuloP();
+    // printf("All tests passed!\n");
+    benchmarkInversionFunctions();
     // uint64_t* a_vals = (uint64_t*)malloc(NUM_ITERATIONS * sizeof(uint64_t));
     // uint32_t* b_vals = (uint32_t*)malloc(NUM_ITERATIONS * sizeof(uint32_t));
     // uint32_t* c_vals = (uint32_t*)malloc(NUM_ITERATIONS * sizeof(uint32_t));

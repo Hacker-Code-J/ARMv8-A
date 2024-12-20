@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # Reading and preparing data
-with open('multiplicationModuloP.txt', 'r') as file:
+with open('inversionModuloP.txt', 'r') as file:
     data = file.readlines()
 
 function1_speeds = [float(data[i].strip()) for i in range(0, len(data), 2)]
@@ -33,7 +33,7 @@ axs[0].plot(lowest1_idx, lowest1, 'v', color='green', markersize=10)
 axs[0].text(lowest1_idx, lowest1, f'{lowest1:.5f}', color='green', va='top', ha='center')
 axs[0].plot(highest1_idx, highest1, '^', color='red', markersize=10)
 axs[0].text(highest1_idx, highest1, f'{highest1:.5f}', color='red', va='bottom', ha='center')
-axs[0].set_title('multiplicationModuloP (in C)', fontsize=18, fontweight='bold', color='dodgerblue')
+axs[0].set_title('inversionModuloP (in C)', fontsize=18, fontweight='bold', color='dodgerblue')
 axs[0].set_ylabel('Cycles', fontsize=16, fontweight='bold')
 axs[0].legend(loc='upper right', fontsize=12)
 axs[0].grid(True, linestyle='--', linewidth=0.5, alpha=0.7)
@@ -45,7 +45,7 @@ axs[1].plot(lowest2_idx, lowest2, 'v', color='green', markersize=10,)
 axs[1].text(lowest2_idx, lowest2, f'{lowest2:.5f}', color='green', va='top', ha='center')
 axs[1].plot(highest2_idx, highest2, '^', color='red', markersize=10)
 axs[1].text(highest2_idx, highest2, f'{highest2:.5f}', color='red', va='bottom', ha='center')
-axs[1].set_title('multiplicationModuloP (in ARMv8)', fontsize=18, fontweight='bold', color='crimson')
+axs[1].set_title('inversionModuloP (in ARMv8)', fontsize=18, fontweight='bold', color='crimson')
 axs[1].set_xlabel('Run Number', fontsize=16, fontweight='bold')
 axs[1].set_ylabel('Cycles', fontsize=16, fontweight='bold')
 axs[1].legend(loc='upper right', fontsize=12)

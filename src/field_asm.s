@@ -69,7 +69,7 @@ reductionModuloP:
     // Load PRIME (0xFFFFFFFB) into x4
     mov x4, #0xFFFB            // Load lower 16 bits of PRIME
     movk x4, #0xFFFF, lsl #16  // Load upper 16 bits of PRIME
-
+    
     // Compare input value (x0) with PRIME
     cmp x0, x4                 // Compare x0 with PRIME
     blt return_original        // If x0 < PRIME, branch to return_original
@@ -78,18 +78,35 @@ reductionModuloP:
     lsr x3, x0, #32            // x3 = r >> LOG_Q (logical shift right by 32 bits)
     mul x3, x3, x4             // x3 = PRIME * (r >> LOG_Q)
     sub x0, x0, x3             // x0 = r - PRIME * (r >> LOG_Q)
-
     // Second reduction
-    // Uncomment if further reduction is needed:
     lsr x3, x0, #32          // x2 = r >> LOG_Q (logical shift right by 32 bits)
     mul x3, x3, x4           // x2 = PRIME * (r >> LOG_Q)
     sub x0, x0, x3           // x0 = r - PRIME * (r >> LOG_Q)
 return_original:
-    // Return the lower 32 bits of r
     uxtw w0, w0                // w0 = (uint32_t)x0
 
-    // Return
     ret
+
+/*
+.global subRedModP
+subRedModP:
+    // Compare input value (x0) with PRIME
+    cmp x0, x4                 // Compare x0 with PRIME
+    blt just_return        // If x0 < PRIME, branch to return_original
+
+    // First reduction
+    lsr x3, x0, #32            // x3 = r >> LOG_Q (logical shift right by 32 bits)
+    mul x3, x3, x4             // x3 = PRIME * (r >> LOG_Q)
+    sub x0, x0, x3             // x0 = r - PRIME * (r >> LOG_Q)
+    // Second reduction
+    lsr x3, x0, #32          // x2 = r >> LOG_Q (logical shift right by 32 bits)
+    mul x3, x3, x4           // x2 = PRIME * (r >> LOG_Q)
+    sub x0, x0, x3           // x0 = r - PRIME * (r >> LOG_Q)
+just_return:
+    uxtw w0, w0                // w0 = (uint32_t)x0
+
+    ret
+*/
 
 /*
 reductionModuloP1:
