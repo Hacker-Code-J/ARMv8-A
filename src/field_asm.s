@@ -145,6 +145,7 @@ inversionModuloP1:
     bl multiplicationModuloP // b1 = (a^3)^2 mod p (a^6 mod p)
     bl reductionModuloP1
     mov x23, x0              // x23 = a^6 mod p
+    mov x1, x0              // x23 = a^6 mod p
     bl multiplicationModuloP // b1 = (a^6)^2 mod p (a^12 mod p)
     bl reductionModuloP1
     mov x1, x22              // x1 = a^3

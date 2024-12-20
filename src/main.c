@@ -46,7 +46,7 @@ reductionModuloP(const uint64_t a) {
 extern uint32_t
 reductionModuloP1(const uint64_t a);
 extern uint32_t inversionModuloP1(const uint32_t a);
-uint32_t inversionModuloP_test(const uint32_t a) {
+uint32_t inversionModuloP(const uint32_t a) {
   /* Takagi's algorithm (as advised by J.C Bajard) */
   uint32_t b0,b1,b2,b3;
   int i;
@@ -112,7 +112,7 @@ uint32_t inversionModuloP_test(const uint32_t a) {
   printf("Final inverse: 0x%x\n", b3);
   return (b3);
 }
-uint32_t inversionModuloP(const uint32_t a) {
+uint32_t inversionModuloP_test(const uint32_t a) {
   /* Takagi's algorithm (as advised by J.C Bajard) */
   uint32_t b0,b1,b2,b3;
   int i;
@@ -160,10 +160,13 @@ void testInversionModuloP() {
         uint32_t a;
         uint32_t expected;
     } testCases[] = {
-        {5, 0xccccccc9U},
-        {3, 0x55555554U},
-        {7, 0x24924924U},
-        {1, 1},
+        {0xF, 0x44444443U},
+        {0xD, 0x3b13b13aU},
+        {0xB, 0x1745d174U},
+        {0x7, 0x24924924U},
+        {0x5, 0xccccccc9U},
+        {0x3, 0x55555554U},
+        {0x1, 0x1},
         {0xFFFFFFFAU, 0xFFFFFFFAU},
     };
 
@@ -172,7 +175,7 @@ void testInversionModuloP() {
         uint32_t result2 = inversionModuloP1(testCases[i].a);
         printf("Testing0 a = 0x%x => Expected: 0x%x, Got: 0x%x\n", testCases[i].a, testCases[i].expected, result);
         printf("Testing1 a = 0x%x => Expected: 0x%x, Got: 0x%x\n", testCases[i].a, testCases[i].expected, result2);
-        assert(result == testCases[i].expected);
+        assert(result == result2 && result == testCases[i].expected);
     }
 
     srand((unsigned int)time(NULL));
@@ -235,9 +238,9 @@ void benchmarkInversionFunctions() {
 int main() {
     // Seed random number generator
     srand((unsigned)time(NULL));
-    // testInversionModuloP();
-    // printf("All tests passed!\n");
-    benchmarkInversionFunctions();
+    testInversionModuloP();
+    printf("All tests passed!\n");
+    // benchmarkInversionFunctions();
     // uint64_t* a_vals = (uint64_t*)malloc(NUM_ITERATIONS * sizeof(uint64_t));
     // uint32_t* b_vals = (uint32_t*)malloc(NUM_ITERATIONS * sizeof(uint32_t));
     // uint32_t* c_vals = (uint32_t*)malloc(NUM_ITERATIONS * sizeof(uint32_t));
