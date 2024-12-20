@@ -58,23 +58,80 @@ void generate_random_inputs(uint32_t *a_vals, uint32_t *b_vals, size_t count) {
     }
 }
 
+void generate_random_32bit(uint32_t* a_vals, size_t count) {
+    for (size_t i = 0; i < count; ++i) {
+        *a_vals += rand() % 0xFFFFFFFB;
+    }
+}
+
 // Utility function for benchmarking
 double benchmark(const char* name, uint64_t (*func)(const uint32_t, const uint32_t),
                  const uint32_t* a_vals, const uint32_t* b_vals, size_t count) {
-    struct timespec start, end;
+    uint64_t start_cycles, end_cycles, total_cycles;
     uint64_t result = 0;
 
-    clock_gettime(CLOCK_MONOTONIC, &start); // Start timing
+    // Record start cycles
+    start_cycles = read_cycle_counter();
 
+    // Run the function for each input pair
     for (size_t i = 0; i < count; ++i) {
         result += func(a_vals[i], b_vals[i]);
     }
 
-    clock_gettime(CLOCK_MONOTONIC, &end); // End timing
+    // Record end cycles
+    end_cycles = read_cycle_counter();
 
-    double time_taken = (end.tv_sec - start.tv_sec) +
-                        (end.tv_nsec - start.tv_nsec) / 1e9;
+    // Calculate total clock cycles
+    total_cycles = end_cycles - start_cycles;
 
-    printf("%s: Total Time = %.6f seconds, Result = %lu\n", name, time_taken, result);
-    return time_taken;
+    // Read counter frequency (number of ticks per second)
+    uint64_t counter_frequency = read_counter_frequency();
+
+    // Calculate cycles per clock (CPC)
+    double cycles_per_clock = (double)total_cycles / count;
+
+    // Calculate time in seconds
+    double time_seconds = (double)total_cycles / counter_frequency;
+
+    // printf("%s: Total Clock Cycles = %lu, Cycles per Clock = %.5f, Total Time = %.6f seconds, Result = %lu\n",
+    //        name, total_cycles, cycles_per_clock, time_seconds, result);
+	
+    printf("%.5f\n", cycles_per_clock);
+	return 0;
+	// uint64_t start_cycles, end_cycles, total_cycles = 0;
+    // uint64_t result = 0;
+
+    // // Record start cycles
+    // start_cycles = read_cycle_counter();
+
+    // // Run the function for each input pair
+    // for (size_t i = 0; i < count; ++i) {
+    //     result += func(a_vals[i], b_vals[i]);
+    // }
+
+    // // Record end cycles
+    // end_cycles = read_cycle_counter();
+
+    // // Calculate total clock cycles
+    // total_cycles = end_cycles - start_cycles;
+
+    // printf("%s: Total Clock Cycles = %lu, Result = %lu\n", name, total_cycles, result);
+    // return total_cycles;
+	
+	// struct timespec start, end, start2, end2;
+    // uint64_t result = 0;
+
+    // clock_gettime(CLOCK_MONOTONIC, &start); // Start timing
+
+    // for (size_t i = 0; i < count; ++i) {
+    //     result += func(a_vals[i], b_vals[i]);
+    // }
+
+    // clock_gettime(CLOCK_MONOTONIC, &end); // End timing
+
+    // double time_taken = (end.tv_sec - start.tv_sec) +
+    //                     (end.tv_nsec - start.tv_nsec) / 1e9;
+
+    // printf("%s: Total Time = %.6f seconds, Result = %lu\n", name, time_taken, result);
+    // return time_taken;
 }
