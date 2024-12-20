@@ -12,7 +12,7 @@
 #define NUM_ITERATIONS 1000000 // Number of iterations for benchmarking
 
 uint64_t
-multiplicationModuloP(const uint32_t a, const uint32_t b) {
+multiplicationModuloP_origin(const uint32_t a, const uint32_t b) {
   uint64_t r = a * (uint64_t)b;
 //   printf("r                            : 0x%016lx\n", r);
 //   printf("r >> 32                      : 0x%016lx\n", r >> 32);
@@ -22,7 +22,7 @@ multiplicationModuloP(const uint32_t a, const uint32_t b) {
   return r;
 }
 extern uint64_t
-multiplicationModuloP1(const uint32_t a, const uint32_t b);
+multiplicationModuloP(const uint32_t a, const uint32_t b);
 
 void
 addmul_P32_into_64_C(uint64_t* a, const uint32_t b, const uint32_t c){
@@ -37,121 +37,121 @@ addmul_P32_into_64_ARM(uint64_t* a, const uint32_t b, const uint32_t c);
 
 /* Modular reduction 61 to 32bits */
 uint32_t
-reductionModuloP(const uint64_t a) {
+reductionModuloP_origin(const uint64_t a) {
   uint64_t r = a;
   r = r - PRIME * (r >> LOG_Q);
   r = r - PRIME * (r >> LOG_Q);
   return (uint32_t)r;
 }
 extern uint32_t
-reductionModuloP1(const uint64_t a);
-extern uint32_t inversionModuloP1(const uint32_t a);
-uint32_t inversionModuloP(const uint32_t a) {
+reductionModuloP(const uint64_t a);
+extern uint32_t inversionModuloP(const uint32_t a);
+uint32_t inversionModuloP_origin_test(const uint32_t a) {
   /* Takagi's algorithm (as advised by J.C Bajard) */
   uint32_t b0,b1,b2,b3;
   int i;
   printf("a: 0x%x\n", a);
-  b0=reductionModuloP(multiplicationModuloP(a,a));
+  b0=reductionModuloP_origin(multiplicationModuloP_origin(a,a));
   printf("b0: 0x%x\n", b0);
-  b0=reductionModuloP(multiplicationModuloP(b0,a));
+  b0=reductionModuloP_origin(multiplicationModuloP_origin(b0,a));
   printf("b0: 0x%x\n", b0);
 
-  b1=reductionModuloP(multiplicationModuloP(b0,b0));
+  b1=reductionModuloP_origin(multiplicationModuloP_origin(b0,b0));
   printf("\nb1: 0x%x\n", b1);
-  b1=reductionModuloP(multiplicationModuloP(b1,b1));
+  b1=reductionModuloP_origin(multiplicationModuloP_origin(b1,b1));
   printf("b1: 0x%x\n", b1);
-  b1=reductionModuloP(multiplicationModuloP(b1,b0));
+  b1=reductionModuloP_origin(multiplicationModuloP_origin(b1,b0));
   printf("b1: 0x%x\n", b1);
 
   b2=b1;
   printf("\nb2: 0x%x\n", b2);
   for(i=0;i<4;i++) {
-    b2=reductionModuloP(multiplicationModuloP(b2,b2));
+    b2=reductionModuloP_origin(multiplicationModuloP_origin(b2,b2));
     printf("[%d] b2: 0x%x\n", i, b2);
   }
-  b2=reductionModuloP(multiplicationModuloP(b2,b1));
+  b2=reductionModuloP_origin(multiplicationModuloP_origin(b2,b1));
   printf("b2: 0x%x\n", b2);
   b3=b2;
   printf("\nb3: 0x%x\n", b3);
 
   for(i=0;i<8;i++) {
-    b3=reductionModuloP(multiplicationModuloP(b3,b3));
+    b3=reductionModuloP_origin(multiplicationModuloP_origin(b3,b3));
     printf("[%d] b3: 0x%x\n", i, b3);
   }
-  b3=reductionModuloP(multiplicationModuloP(b3,b2));
+  b3=reductionModuloP_origin(multiplicationModuloP_origin(b3,b2));
   printf("b3: 0x%x\n", b3);
 
   for(i=0;i<8;i++) {
-    b3=reductionModuloP(multiplicationModuloP(b3,b3));
+    b3=reductionModuloP_origin(multiplicationModuloP_origin(b3,b3));
     printf("[%d] b3: 0x%x\n", i, b3);
   }
-  b3=reductionModuloP(multiplicationModuloP(b3,b2));
+  b3=reductionModuloP_origin(multiplicationModuloP_origin(b3,b2));
   printf("b3: 0x%x\n", b3);
 
   for(i=0;i<4;i++) {
-    b3=reductionModuloP(multiplicationModuloP(b3,b3));
+    b3=reductionModuloP_origin(multiplicationModuloP_origin(b3,b3));
     printf("[%d] b3: 0x%x\n", i, b3);
   }
-  b3=reductionModuloP(multiplicationModuloP(b3,b1));
+  b3=reductionModuloP_origin(multiplicationModuloP_origin(b3,b1));
   printf("b3: 0x%x\n", b3);
 
-  b3=reductionModuloP(multiplicationModuloP(b3,b3));
+  b3=reductionModuloP_origin(multiplicationModuloP_origin(b3,b3));
   printf("\nb3: 0x%x\n", b3);
-  b3=reductionModuloP(multiplicationModuloP(b3,a));
+  b3=reductionModuloP_origin(multiplicationModuloP_origin(b3,a));
   printf("b3: 0x%x\n", b3);
 
-  b3=reductionModuloP(multiplicationModuloP(b3,b3));
+  b3=reductionModuloP_origin(multiplicationModuloP_origin(b3,b3));
   printf("b3: 0x%x\n", b3);
-  b3=reductionModuloP(multiplicationModuloP(b3,b3));
+  b3=reductionModuloP_origin(multiplicationModuloP_origin(b3,b3));
   printf("b3: 0x%x\n", b3);
-  b3=reductionModuloP(multiplicationModuloP(b3,b3));
+  b3=reductionModuloP_origin(multiplicationModuloP_origin(b3,b3));
   printf("b3: 0x%x\n", b3);
-  b3=reductionModuloP(multiplicationModuloP(b3,a));
+  b3=reductionModuloP_origin(multiplicationModuloP_origin(b3,a));
   printf("b3: 0x%x\n", b3);
   
   printf("Final inverse: 0x%x\n", b3);
   return (b3);
 }
-uint32_t inversionModuloP_test(const uint32_t a) {
+uint32_t inversionModuloP_origin(const uint32_t a) {
   /* Takagi's algorithm (as advised by J.C Bajard) */
   uint32_t b0,b1,b2,b3;
   int i;
-  b0=reductionModuloP(multiplicationModuloP(a,a));
-  b0=reductionModuloP(multiplicationModuloP(b0,a));
+  b0=reductionModuloP_origin(multiplicationModuloP_origin(a,a));
+  b0=reductionModuloP_origin(multiplicationModuloP_origin(b0,a));
 
-  b1=reductionModuloP(multiplicationModuloP(b0,b0));
-  b1=reductionModuloP(multiplicationModuloP(b1,b1));
-  b1=reductionModuloP(multiplicationModuloP(b1,b0));
+  b1=reductionModuloP_origin(multiplicationModuloP_origin(b0,b0));
+  b1=reductionModuloP_origin(multiplicationModuloP_origin(b1,b1));
+  b1=reductionModuloP_origin(multiplicationModuloP_origin(b1,b0));
 
   b2=b1;
   for(i=0;i<4;i++) {
-    b2=reductionModuloP(multiplicationModuloP(b2,b2));
+    b2=reductionModuloP_origin(multiplicationModuloP_origin(b2,b2));
   }
-  b2=reductionModuloP(multiplicationModuloP(b2,b1));
+  b2=reductionModuloP_origin(multiplicationModuloP_origin(b2,b1));
   b3=b2;
 
   for(i=0;i<8;i++) {
-    b3=reductionModuloP(multiplicationModuloP(b3,b3));
+    b3=reductionModuloP_origin(multiplicationModuloP_origin(b3,b3));
   }
-  b3=reductionModuloP(multiplicationModuloP(b3,b2));
+  b3=reductionModuloP_origin(multiplicationModuloP_origin(b3,b2));
 
   for(i=0;i<8;i++) {
-    b3=reductionModuloP(multiplicationModuloP(b3,b3));
+    b3=reductionModuloP_origin(multiplicationModuloP_origin(b3,b3));
   }
-  b3=reductionModuloP(multiplicationModuloP(b3,b2));
+  b3=reductionModuloP_origin(multiplicationModuloP_origin(b3,b2));
 
   for(i=0;i<4;i++) {
-    b3=reductionModuloP(multiplicationModuloP(b3,b3));
+    b3=reductionModuloP_origin(multiplicationModuloP_origin(b3,b3));
   }
-  b3=reductionModuloP(multiplicationModuloP(b3,b1));
+  b3=reductionModuloP_origin(multiplicationModuloP_origin(b3,b1));
 
-  b3=reductionModuloP(multiplicationModuloP(b3,b3));
-  b3=reductionModuloP(multiplicationModuloP(b3,a));
+  b3=reductionModuloP_origin(multiplicationModuloP_origin(b3,b3));
+  b3=reductionModuloP_origin(multiplicationModuloP_origin(b3,a));
 
-  b3=reductionModuloP(multiplicationModuloP(b3,b3));
-  b3=reductionModuloP(multiplicationModuloP(b3,b3));
-  b3=reductionModuloP(multiplicationModuloP(b3,b3));
-  b3=reductionModuloP(multiplicationModuloP(b3,a));
+  b3=reductionModuloP_origin(multiplicationModuloP_origin(b3,b3));
+  b3=reductionModuloP_origin(multiplicationModuloP_origin(b3,b3));
+  b3=reductionModuloP_origin(multiplicationModuloP_origin(b3,b3));
+  b3=reductionModuloP_origin(multiplicationModuloP_origin(b3,a));
   return (b3);
 }
 
@@ -160,20 +160,30 @@ void testInversionModuloP() {
         uint32_t a;
         uint32_t expected;
     } testCases[] = {
-        {0xF, 0x44444443U},
-        {0xD, 0x3b13b13aU},
-        {0xB, 0x1745d174U},
-        {0x7, 0x24924924U},
-        {0x5, 0xccccccc9U},
-        {0x3, 0x55555554U},
+        {0xFFFFFFF7U, 0xBFFFFFFCU},
         {0x1, 0x1},
+        {0x3, 0x55555554U},
+        {0x5, 0xccccccc9U},
+        {0x7, 0x24924924U},
+        {0x9, 0x1c71c71cU},
+        {0xB, 0x1745d174U},
+        {0xD, 0x3b13b13aU},
+        {0xF, 0x44444443U},
         {0xFFFFFFFAU, 0xFFFFFFFAU},
+        {0xFFFFFFF9U, 0x7FFFFFFDU},
+        {0xFFFFFFF5U, 0xD5555551U},
+        {0xFFFFFFF3U, 0x5FFFFFFEU},
+        {0xFFFFFFEFU, 0xEAAAAAA6U},
+        {0xFFFFFFEBU, 0x2FFFFFFFU},
+        {0xFFFFFFE7U, 0x8CCCCCCAU},
     };
+    // for (int i = 0; i < sizeof(testCases)/ sizeof(testCases[0]); i++)
+    //   printf("0x%08x & 0x%08x \\\\ \n", testCases[i].a, testCases[i].expected);
 
     for (int i = 0; i < sizeof(testCases) / sizeof(testCases[0]); ++i) {
-        uint32_t result = inversionModuloP(testCases[i].a);
-        uint32_t result2 = inversionModuloP1(testCases[i].a);
-        printf("Testing0 a = 0x%x => Expected: 0x%x, Got: 0x%x\n", testCases[i].a, testCases[i].expected, result);
+        uint32_t result = inversionModuloP_origin(testCases[i].a);
+        uint32_t result2 = inversionModuloP(testCases[i].a);
+        printf("\n\nTesting0 a = 0x%x => Expected: 0x%x, Got: 0x%x\n", testCases[i].a, testCases[i].expected, result);
         printf("Testing1 a = 0x%x => Expected: 0x%x, Got: 0x%x\n", testCases[i].a, testCases[i].expected, result2);
         assert(result == result2 && result == testCases[i].expected);
     }
@@ -197,15 +207,15 @@ void testInversionModuloP() {
 void benchmarkInversionFunctions() {
     uint32_t testValue = 3; // Example input
     uint64_t start, end;
-    uint64_t totalCyclesP1 = 0, totalCyclesP = 0;
+    uint64_t totalCyclesP0 = 0, totalCyclesP = 0;
 
     // Benchmark inversionModuloP1
     start = read_cycle_counter();
     for (int i = 0; i < NUM_ITERATIONS; i++) {
-        volatile uint32_t result = inversionModuloP1(testValue);
+        volatile uint32_t result = inversionModuloP_origin(testValue);
     }
     end = read_cycle_counter();
-    totalCyclesP1 = end - start;
+    totalCyclesP0 = end - start;
 
     // Benchmark inversionModuloP
     start = read_cycle_counter();
@@ -217,19 +227,19 @@ void benchmarkInversionFunctions() {
 
     // Print results
     // Print results
-    double cyclesPerTestP1 = (double)totalCyclesP1 / NUM_ITERATIONS;
+    double cyclesPerTestP0 = (double)totalCyclesP0 / NUM_ITERATIONS;
     double cyclesPerTestP = (double)totalCyclesP / NUM_ITERATIONS;
-    printf("Cycles per test for inversionModuloP1: %.5f\n", cyclesPerTestP1);
+    printf("Cycles per test for inversionModuloP0: %.5f\n", cyclesPerTestP0);
     printf("Cycles per test for inversionModuloP: %.5f\n", cyclesPerTestP);
     printf("Benchmark Results (over %d tests):\n", NUM_ITERATIONS);
-    printf("inversionModuloP1: %lu clock cycles\n", totalCyclesP1);
+    printf("inversionModuloP1: %lu clock cycles\n", totalCyclesP0);
     printf("inversionModuloP: %lu clock cycles\n", totalCyclesP);
 
     // Compare performance
-    if (totalCyclesP1 < totalCyclesP) {
-        printf("inversionModuloP1 is faster by %.2f%%\n", ((double)(totalCyclesP - totalCyclesP1) / totalCyclesP) * 100);
-    } else if (totalCyclesP < totalCyclesP1) {
-        printf("inversionModuloP is faster by %.2f%%\n", ((double)(totalCyclesP1 - totalCyclesP) / totalCyclesP1) * 100);
+    if (totalCyclesP0 < totalCyclesP) {
+        printf("inversionModuloP1 is faster by %.2f%%\n", ((double)(totalCyclesP - totalCyclesP0) / totalCyclesP) * 100);
+    } else if (totalCyclesP < totalCyclesP0) {
+        printf("inversionModuloP is faster by %.2f%%\n", ((double)(totalCyclesP0 - totalCyclesP) / totalCyclesP0) * 100);
     } else {
         printf("Both functions have similar performance.\n");
     }
