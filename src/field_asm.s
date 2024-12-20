@@ -120,7 +120,7 @@ reductionModuloP1:
 inversionModuloP1:
     // Save callee-saved registers (x19-x28) and align stack
     stp x29, x30, [sp, #-16]!      // Save frame pointer and link register
-    mov x29, sp                    // Set up frame pointer
+    // mov x29, sp                    // Set up frame pointer
     stp x19, x20, [sp, #-16]!      // Save x19 and x20
     stp x21, x22, [sp, #-16]!      // Save x21 and x22
     stp x23, x24, [sp, #-16]!      // Save x23 and x24
